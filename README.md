@@ -7,7 +7,7 @@ Knifefish is a 16 round, balanced, Feistel network cipher, with a 128-bit block 
 This repository contains a command-line proof of concept program meant for testing and benchmarking.
 
 ```bash
-torsocks --port 9150  git clone http://ojbobg374fokafgu3c5qmlvrmt646c43orsti24p6u62rbbveutdcyqd.onion/root/knifefish128
+git clone https://github.com/lib64/knifefish128
 cd knifefish128/src/
 make
 ```
