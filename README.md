@@ -37,8 +37,7 @@ The program will prompt for a password unless it is specified with -p.
 ./kf128 -e -i input.txt -o input_encrypted.txt -p "marbles"
 ```
 
-The program will generate a 16 byte iv from /dev/urandom on unix systems, 
-and from RtlGenRandom on windows systems, unless one is specified with -k.
+The program will generate a 16 byte iv from /dev/urandom unless one is specified with -k.
 
 Any iv specified with -k must be exactly 16 bytes.
 
