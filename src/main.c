@@ -1,7 +1,7 @@
 /* 
  * Copyright (c) 2018-2019, Michael Harper
  * 
-/* See LICENSE for licensing information */
+ * See LICENSE for licensing information */
 
 #include "kf128.h"
 
