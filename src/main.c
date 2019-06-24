@@ -189,8 +189,7 @@ int main(int argc, char **argv)
 				reset_input_mode();
 #endif
                 printf("\n");
-
-
+                
                 first = 0;
             }
             while(memcmp(pass,pass2,MAX_PASS) != 0);
@@ -224,11 +223,6 @@ int main(int argc, char **argv)
                 fclose(in);
 #elif _WIN32
                 if(!RtlGenRandom(iv,16))
-                {
-                    printf("Error - Cant generate an iv with RtlGenRandom.\nExiting.\n");
-                    return 0;
-                }
-                if(!RtlGenRandom(padding,16))
                 {
                     printf("Error - Cant generate an iv with RtlGenRandom.\nExiting.\n");
                     return 0;
