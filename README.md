@@ -8,7 +8,7 @@ This repository contains a command-line proof of concept program meant for testi
 
 ```bash
 git clone https://github.com/lib64/knifefish128
-cd knifefish128/src/
+cd knifefish128/
 make
 ```
 
