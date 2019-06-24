@@ -4,21 +4,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include <getopt.h>
-
-#ifdef __linux__
 #include <termios.h>
-#elif _WIN32
-#include <windows.h>
-#include <ntsecapi.h>
-#endif
 
 #define MAX_ARGS 20
 
 #define MAX_FILE_PATH 128
 #define MAX_PASS 256
 #define IV_SIZE 16
-
-#ifdef __linux__
 
 struct termios saved_attributes;
 
@@ -37,8 +29,6 @@ void set_input_mode(void)
     tattr.c_cc[VTIME] = 0;
     tcsetattr (0, TCSAFLUSH, &tattr);
 }
-
-#endif
 
 void usage(void)
 {
@@ -174,20 +164,11 @@ int main(int argc, char **argv)
                 }
                
                 printf("password:");
-#ifdef __linux__
-                set_input_mode();                
-#elif _WIN32
-                HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
-                DWORD mode = 0;
-                GetConsoleMode(hStdin, &mode);
-                SetConsoleMode(hStdin, mode & (~ENABLE_ECHO_INPUT));                
- #endif    
+                set_input_mode();                 
                 fgets(pass,MAX_PASS,stdin);
                 printf("\nrepeat:");
                 fgets(pass2,MAX_PASS,stdin);
-#ifdef __linux__
 				reset_input_mode();
-#endif
                 printf("\n");
                 
                 first = 0;
@@ -212,7 +193,6 @@ int main(int argc, char **argv)
         {
             if(encrypt_flag)
             {		
-#ifdef __linux__
                 FILE *in = fopen("/dev/urandom","r");
                 if(!in)
                 {
@@ -221,13 +201,6 @@ int main(int argc, char **argv)
                 fread(iv,sizeof (char), 16, in);
                 fread(padding,sizeof (char), 16, in);
                 fclose(in);
-#elif _WIN32
-                if(!RtlGenRandom(iv,16))
-                {
-                    printf("Error - Cant generate an iv with RtlGenRandom.\nExiting.\n");
-                    return 0;
-                }
-#endif
             }
         }
 		
