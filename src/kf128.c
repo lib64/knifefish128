@@ -1,4 +1,9 @@
-﻿#include "kf128.h"
+﻿/* 
+ * Copyright (c) 2018-2019, Michael Harper
+ * 
+/* See LICENSE for licensing information */
+
+#include "kf128.h"
 #include <string.h>
 #include <stdio.h>
 

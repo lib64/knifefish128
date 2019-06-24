@@ -1,3 +1,8 @@
+/* 
+ * Copyright (c) 2018-2019, Michael Harper
+ * 
+/* See LICENSE for licensing information */
+
 #ifndef KF128_H
 #define KF128_H
 
