@@ -9,11 +9,12 @@ import subprocess
 
 tests = {
     "pht"   :"pht/test_pht",
+    "sbox" : "sbox/test_sbox",
+    "pbox" : "pbox/test_pbox",
     "expand_passphrase" : "expand_passphrase/test_expand_passphrase",
     "invert_ctx" : "invert_ctx/test_invert_ctx",
     "block" :"block/test_block",
     "encrypt_file_cbc" : "encrypt_file_cbc/test_encrypt_file_cbc",
-    "sbox" : "sbox/test_sbox"
     }
 
 exit_codes = {}
