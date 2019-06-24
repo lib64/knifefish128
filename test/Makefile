@@ -1,4 +1,4 @@
-SUBDIRS := pht block invert_ctx expand_passphrase encrypt_file_cbc
+SUBDIRS := pht block invert_ctx expand_passphrase encrypt_file_cbc sbox
 
 all: $(SUBDIRS)
 $(SUBDIRS):
@@ -12,3 +12,4 @@ clean:
 	$(MAKE) -C invert_ctx clean
 	$(MAKE) -C expand_passphrase clean
 	$(MAKE) -C encrypt_file_cbc clean
+	$(MAKE) -C sbox clean
