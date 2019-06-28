@@ -9,13 +9,18 @@
 #include <string.h>
 #include <stdlib.h>
 #include <getopt.h>
+
+#ifdef _linux
 #include <termios.h>
+#endif
 
 #define MAX_ARGS 20
 
 #define MAX_FILE_PATH 128
 #define MAX_PASS 256
 #define IV_SIZE 16
+
+#ifdef _linux
 
 struct termios saved_attributes;
 
@@ -34,6 +39,8 @@ void set_input_mode(void)
     tattr.c_cc[VTIME] = 0;
     tcsetattr (0, TCSAFLUSH, &tattr);
 }
+
+#endif
 
 void usage(void)
 {
@@ -169,11 +176,17 @@ int main(int argc, char **argv)
                 }
                
                 printf("password:");
-                set_input_mode();                 
+#ifdef _linux
+
+                set_input_mode();   
+#endif              
                 fgets(pass,MAX_PASS,stdin);
                 printf("\nrepeat:");
                 fgets(pass2,MAX_PASS,stdin);
+#ifdef _linux
+
 				reset_input_mode();
+#endif
                 printf("\n");
                 
                 first = 0;
