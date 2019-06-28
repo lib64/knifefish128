@@ -20,7 +20,7 @@ int main(void) {
 
   int test[PBOX_SIZE];
 
-  memset(test, 0, PBOX_SIZE);
+  memset(test, 0, sizeof(int) * PBOX_SIZE);
 
   for (int i = 0; i < PBOX_SIZE; i++) {
     if (pbox[i] > PBOX_SIZE - 1 || pbox[i] < 0) {

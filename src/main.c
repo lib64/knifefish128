@@ -12,6 +12,9 @@
 
 #ifdef _linux
 #include <termios.h>
+#elif _WIN32
+#include <windows.h>
+#include <ntsecapi.h>
 #endif
 
 #define MAX_ARGS 20
@@ -20,7 +23,7 @@
 #define MAX_PASS 256
 #define IV_SIZE 16
 
-#ifdef _linux
+#ifdef __unix__
 
 struct termios saved_attributes;
 
@@ -157,15 +160,13 @@ int main(int argc, char **argv) {
         }
 
         printf("password:");
-#ifdef _linux
-
+#ifdef __unix__
         set_input_mode();
 #endif
         fgets(pass, MAX_PASS, stdin);
         printf("\nrepeat:");
         fgets(pass2, MAX_PASS, stdin);
-#ifdef _linux
-
+#ifdef __unix__
         reset_input_mode();
 #endif
         printf("\n");
@@ -185,13 +186,25 @@ int main(int argc, char **argv) {
       }
     } else {
       if (encrypt_flag) {
+#ifdef __unix__
         FILE *in = fopen("/dev/urandom", "r");
         if (!in) {
           printf("Error - Cant generate an iv with /dev/urandom.\nExiting.\n");
+          return -1;
         }
         fread(iv, sizeof(char), 16, in);
         fread(padding, sizeof(char), 16, in);
         fclose(in);
+#elif _WIN32
+        if(!RtlGenRandom(iv, 16L)) {
+          printf("Error - Cant generate an iv with RtlGenRandom.\nExiting.\n");
+          return -1;
+        }
+        if(!RtlGenRandom(padding, 16L)) {
+          printf("Error - Cant generate padding with RtlGenRandom.\nExiting.\n");
+          return -1;
+        }
+#endif
       }
     }
 
