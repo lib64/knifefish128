@@ -21,7 +21,7 @@ int main(void) {
   char plaintext[64] = {0};
   for (int i = 1; i < 64 + 1; i++) {
     for (int j = 0; j < i; j++) {
-      plaintext[j] = rand() % 128;
+      plaintext[j] = rand() % 26 + 65;
     }
 
     FILE *test = fopen("kf_test_plain.txt", "w");
