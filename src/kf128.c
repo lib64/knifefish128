@@ -111,7 +111,7 @@ void kf_expand_passphrase(const char *passphrase, kf_ctx *ctx)
              key[j] ^= shift_register;
 
              for(int k = 0;k < 32; k++)
-                    kf_lfsr(&shift_register);
+                kf_lfsr(&shift_register);
          }
     }
 
@@ -132,7 +132,7 @@ void kf_expand_passphrase(const char *passphrase, kf_ctx *ctx)
         key[i] ^= shift_register;
 
         for(int j = 0;j < 32; j++)
-               kf_lfsr(&shift_register);
+            kf_lfsr(&shift_register);
     }
 
     int count = 0;

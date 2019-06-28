@@ -12,7 +12,7 @@ int main(void)
 {
     int fail = 0;
 
-    printf("[*] Testing the PHT function.\n\n");
+    printf("[*] Testing the PHT function.\n");
 
     uint32_t a = 0xDEADBEEF;
     uint32_t b = 0xBAADF00D;
@@ -22,23 +22,18 @@ int main(void)
 
     kf_pht(&a,&b, &a_prime, &b_prime);
 
-    printf("    [*] Test #1\n");
-    printf("        Input    -> a:  0x%08"PRIx32" b:  0x%08"PRIx32"\n",a,b);
-    printf("        Expected -> a': 0x%08"PRIx32" b': 0x%08"PRIx32"\n",ares,bres);
-    printf("        Got      -> a': 0x%08"PRIx32" b': 0x%08"PRIx32"\n",a_prime,b_prime);
-
     if(a_prime == ares && b_prime == bres)
     {
-        printf("    [*] Test #1 Passed.\n\n");
+        printf("    [*] Test #1 Passed.\n");
     }
     else
     {
-        printf("    [*] Test #1 Failed.\n\n");
+        printf("    [*] Test #1 Failed.\n");
         fail = 1;
     }
 
     if(fail == 0)
-        printf("[*] All PHT tests passed.\n\n");
+        printf("[*] All PHT tests passed.\n");
 
     return fail;
 }

@@ -13,9 +13,7 @@ int main(void)
 {
     int fail = 0;
 
-    printf("[*] Testing the init_sbox function.\n\n");
-
-    printf("    [*] Test #1\n");
+    printf("[*] Testing the init_sbox function.\n");
 
     uint8_t sbox[SBOX_SIZE];
 
@@ -46,15 +44,15 @@ int main(void)
 
     if(fail == 0)
     {
-        printf("    [*] Test #1 Passed.\n\n");
+        printf("    [*] Test #1 Passed.\n");
     }
     else
     {
-        printf("    [*] Test #1 Failed.\n\n");
+        printf("    [*] Test #1 Failed.\n");
     }
 
     if(fail == 0)
-        printf("[*] All block tests passed.\n\n");
+        printf("[*] All block tests passed.\n");
 
     return fail;
 }

@@ -19,11 +19,10 @@ int main(void)
     char padding[] = "vdslsilvfdkvlfdn";
     char passphrase[] = "this is my password";
 
-    char plaintext[21] = {0};
-    for(int i = 1; i < BLOCK_SIZE + 1; i++)
+    char plaintext[64] = {0};
+    for(int i = 1; i < 64 + 1; i++)
     {
 
-	printf("    [*] Test #%d\n",i);
         for(int j = 0; j < i; j++)
         {
             plaintext[j] = rand() % 128;
@@ -31,7 +30,7 @@ int main(void)
 
         FILE *test = fopen("kf_test_plain.txt","w");
 
-        fwrite(plaintext,sizeof (char), strlen(plaintext),test);
+        fwrite(plaintext,sizeof (char), i-1,test);
 
         fclose(test);
 
@@ -56,16 +55,15 @@ int main(void)
         fclose(in);
         fclose(in2);
 
-	if(ch1==ch2)
-	{
-	    printf("    [*] Test #%d Passed.\n",i);
-	}
-	else
-	{
-	    printf("    [*] Test #%d Failed.\n",i);
-	    fail++;
-	}
-
+        if(ch1==ch2)
+        {
+            printf("    [*] Test #%d Passed.\n",i);
+        }
+        else
+        {
+            printf("    [*] Test #%d Failed.\n",i);
+            fail++;
+        }
 
         remove("kf_test_plain.txt");
         remove("kf_test_enc.txt");
@@ -73,7 +71,7 @@ int main(void)
     }
 
     if(fail == 0)
-        printf("[*] All encrypt_file_cbc tests passed.\n\n");
+        printf("[*] All encrypt_file_cbc tests passed.\n");
 
     return fail;
 }

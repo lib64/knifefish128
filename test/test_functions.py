@@ -19,7 +19,7 @@ tests = {
 
 exit_codes = {}
 
-print("\n\u001b[32m[*] Running tests.\u001b[37m\n")
+print("\n[*] Running tests.\n")
 
 for k in tests.keys():
 
@@ -37,14 +37,11 @@ for k in exit_codes.keys():
 
     if exit_codes[k] > 0:
 
-        print("\u001b[31m[X] " + str(exit_codes[k]) + " tests failed in " + k + "\n")
+        print(str(exit_codes[k]) + " tests failed in " + k + "\n")
 
         all_passed = False
 
 if all_passed:
-
-        print("\u001b[32m[*] All tests passed.\n")
-
+        print("[*] All tests passed.\n")
 
 
-print("\u001b[37m")

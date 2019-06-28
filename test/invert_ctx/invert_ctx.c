@@ -13,7 +13,7 @@ int main(void)
 {
     int fail = 0;
 
-    printf("[*] Testing the intvert_ctx function.\n\n");
+    printf("[*] Testing the intvert_ctx function.\n");
 
     char passphrase[] = "AbCdEfGhIj";
 
@@ -25,23 +25,18 @@ int main(void)
 
     kf_invert_ctx(&inv,&ctx2);
 
-    printf("    [*] Test #1\n");
-    printf("        Expanding Passphrase.\n");
-    printf("        Inverting the ctx twice.\n");
-    printf("        Checking for equality.\n");
-
     if(memcmp(&ctx,&ctx2, sizeof(uint32_t) * 4) == 0)
     {
-        printf("    [*] Test #1 Passed.\n\n");
+        printf("    [*] Test #1 Passed.\n");
     }
     else
     {
-        printf("    [*] Test #1 Failed.\n\n");
+        printf("    [*] Test #1 Failed.\n");
         fail = 1;
     }
 
     if(fail == 0)
-        printf("[*] All invert_ctx tests passed.\n\n");
+        printf("[*] All invert_ctx tests passed.\n");
 
     return fail;
 }
