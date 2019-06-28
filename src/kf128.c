@@ -241,14 +241,14 @@ void kf_encrypt_file_cbc(const char *infile, const char *outfile, const char *pa
 
 	    if(i == block_count - 1 && remaining != 0)
 	    {
-		memcpy(block,padding,sizeof(uint32_t)*4);
-		fread(block,sizeof(uint8_t),remaining,in);
-                ((uint8_t*)block)[BLOCK_SIZE - 1] = (uint8_t)remaining;
+		    memcpy(block,padding,sizeof(uint32_t)*4);
+		    fread(block,sizeof(uint8_t),remaining,in);
+            ((uint8_t*)block)[BLOCK_SIZE - 1] = (uint8_t)remaining;
 	    }
-            else
-            {
-	    	fread(block,sizeof(uint32_t),4,in);
-            }
+        else
+        {
+            fread(block,sizeof(uint32_t),4,in);
+        }
 
 	    block[0] ^= key[0];
 	    block[1] ^= key[1];
@@ -310,16 +310,16 @@ void kf_decrypt_file_cbc(const char *infile, const char *outfile, const char *pa
 	    tmp[2] ^= key[2];
 	    tmp[3] ^= key[3];
 
-            if(i != block_count -1)
+        if(i != block_count -1)
 	    {
-		fwrite(tmp,sizeof(uint32_t),4,out);
+		    fwrite(tmp,sizeof(uint32_t),4,out);
 	    }
-            else
+        else
 	    {
-		uint8_t remaining = ((uint8_t*)tmp)[BLOCK_SIZE-1];
-		fwrite(tmp,sizeof(uint8_t),remaining,out);
-            }
-            memcpy(key, block, sizeof(uint32_t)*4);
+            uint8_t remaining = ((uint8_t*)tmp)[BLOCK_SIZE-1];
+            fwrite(tmp,sizeof(uint8_t),remaining,out);
+        }
+        memcpy(key, block, sizeof(uint32_t)*4);
 	}
 	
 	fclose(in);
