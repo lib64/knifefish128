@@ -59,7 +59,8 @@ int main(int argc, char **argv) {
   int passphrase_flag = 0;
   int iv_flag = 0;
 
-  char input[MAX_FILE_PATH + 1], output[MAX_FILE_PATH];
+  char input[MAX_FILE_PATH + 1];
+  char output[MAX_FILE_PATH + 1];
   char pass[MAX_PASS + 1] = {0};
   char pass2[MAX_PASS + 1] = {0};
 
