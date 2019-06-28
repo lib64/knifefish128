@@ -1,6 +1,6 @@
-/* 
+/*
  * Copyright (c) 2018-2019, Michael Harper
- * 
+ *
  * See LICENSE for licensing information */
 
 #ifndef KF128_H
@@ -21,11 +21,10 @@
 #define PHT_MAX 4294967296
 
 typedef struct {
-
-    uint8_t  sbox[SBOX_COUNT][SBOX_SIZE];
-    uint8_t  pbox[PBOX_SIZE];
-    uint32_t skey[ROUNDS][SKEY_SIZE];
-    uint32_t wkey[WKEY_COUNT][WKEY_SIZE];
+  uint8_t sbox[SBOX_COUNT][SBOX_SIZE];
+  uint8_t pbox[PBOX_SIZE];
+  uint32_t skey[ROUNDS][SKEY_SIZE];
+  uint32_t wkey[WKEY_COUNT][WKEY_SIZE];
 
 } kf_ctx;
 
@@ -33,7 +32,8 @@ void kf_lfsr(uint32_t *shift_register);
 
 uint8_t kf_lfsr_byte(uint32_t *shift_register);
 
-void kf_pht(const uint32_t *a, const uint32_t *b, uint32_t *a_prime, uint32_t *b_prime);
+void kf_pht(const uint32_t *a, const uint32_t *b, uint32_t *a_prime,
+            uint32_t *b_prime);
 
 void kf_invert_ctx(const kf_ctx *key, kf_ctx *inv);
 
@@ -45,12 +45,16 @@ void kf_expand_passphrase(const char *passphrase, kf_ctx *ctx);
 
 void kf_f(const uint32_t *in, uint32_t *out, const size_t round, kf_ctx *ctx);
 
-void kf_round(const uint32_t *in, uint32_t *out, const size_t round, kf_ctx *ctx);
+void kf_round(const uint32_t *in, uint32_t *out, const size_t round,
+              kf_ctx *ctx);
 
 void kf_block(const uint32_t *in, uint32_t *out, kf_ctx *ctx);
 
-void kf_encrypt_file_cbc(const char *infile, const char *outfile, const char *passphrase, const char *iv, const char *padding);
+void kf_encrypt_file_cbc(const char *infile, const char *outfile,
+                         const char *passphrase, const char *iv,
+                         const char *padding);
 
-void kf_decrypt_file_cbc(const char *infile, const char *outfile, const char *passphrase);
+void kf_decrypt_file_cbc(const char *infile, const char *outfile,
+                         const char *passphrase);
 
-#endif // KF128_H
+#endif  // KF128_H
