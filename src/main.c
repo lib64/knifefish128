@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef _linux
+#ifdef __unix__
 #include <termios.h>
 #elif _WIN32
 #include <windows.h>
