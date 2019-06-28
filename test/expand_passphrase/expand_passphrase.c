@@ -27,7 +27,8 @@ int main(void) {
     fail = 1;
   }
 
-  if (fail == 0) printf("[*] All expand_passphrase tests passed.\n");
+  if (fail == 0)
+    printf("[*] All expand_passphrase tests passed.\n");
 
   return fail;
 }

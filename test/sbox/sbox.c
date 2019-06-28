@@ -43,7 +43,8 @@ int main(void) {
     printf("    [*] Test #1 Failed.\n");
   }
 
-  if (fail == 0) printf("[*] All block tests passed.\n");
+  if (fail == 0)
+    printf("[*] All block tests passed.\n");
 
   return fail;
 }

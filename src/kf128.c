@@ -17,7 +17,8 @@ void kf_lfsr(uint32_t *shift_register) {
 }
 
 uint8_t kf_lfsr_byte(uint32_t *shift_register) {
-  for (int i = 0; i < 8; i++) kf_lfsr(shift_register);
+  for (int i = 0; i < 8; i++)
+    kf_lfsr(shift_register);
   return *shift_register & 0x000000FF;
 }
 
@@ -80,7 +81,8 @@ void kf_expand_passphrase(const char *passphrase, kf_ctx *ctx) {
 
   size_t passlen = strlen(passphrase);
 
-  if (passlen > 256) passlen = 256;
+  if (passlen > 256)
+    passlen = 256;
 
   for (size_t i = 0; i < passlen - 4; i += 4) {
     shift_register =
@@ -90,7 +92,8 @@ void kf_expand_passphrase(const char *passphrase, kf_ctx *ctx) {
     for (int j = 0; j < KEY_SIZE; j++) {
       key[j] ^= shift_register;
 
-      for (int k = 0; k < 32; k++) kf_lfsr(&shift_register);
+      for (int k = 0; k < 32; k++)
+        kf_lfsr(&shift_register);
     }
   }
 
@@ -106,7 +109,8 @@ void kf_expand_passphrase(const char *passphrase, kf_ctx *ctx) {
   for (int i = 0; i < KEY_SIZE; i++) {
     key[i] ^= shift_register;
 
-    for (int j = 0; j < 32; j++) kf_lfsr(&shift_register);
+    for (int j = 0; j < 32; j++)
+      kf_lfsr(&shift_register);
   }
 
   int count = 0;

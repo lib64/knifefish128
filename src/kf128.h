@@ -57,4 +57,4 @@ void kf_encrypt_file_cbc(const char *infile, const char *outfile,
 void kf_decrypt_file_cbc(const char *infile, const char *outfile,
                          const char *passphrase);
 
-#endif  // KF128_H
+#endif // KF128_H

@@ -28,7 +28,8 @@ int main(void) {
     fail = 1;
   }
 
-  if (fail == 0) printf("[*] All PHT tests passed.\n");
+  if (fail == 0)
+    printf("[*] All PHT tests passed.\n");
 
   return fail;
 }

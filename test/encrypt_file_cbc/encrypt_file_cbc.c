@@ -63,7 +63,8 @@ int main(void) {
     remove("kf_test_dec.txt");
   }
 
-  if (fail == 0) printf("[*] All encrypt_file_cbc tests passed.\n");
+  if (fail == 0)
+    printf("[*] All encrypt_file_cbc tests passed.\n");
 
   return fail;
 }

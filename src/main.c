@@ -84,46 +84,47 @@ int main(int argc, char **argv) {
 
     c = getopt_long(argc, argv, "hedi:o:p:k:", long_options, &option_index);
 
-    if (c == -1) break;
+    if (c == -1)
+      break;
 
     switch (c) {
-      case 'h':
-        help_flag = 1;
-        break;
+    case 'h':
+      help_flag = 1;
+      break;
 
-      case 'e':
-        encrypt_flag = 1;
-        break;
+    case 'e':
+      encrypt_flag = 1;
+      break;
 
-      case 'd':
-        decrypt_flag = 1;
-        break;
+    case 'd':
+      decrypt_flag = 1;
+      break;
 
-      case 'i':
-        input_flag = 1;
-        strncpy(input, optarg, MAX_FILE_PATH);
-        break;
+    case 'i':
+      input_flag = 1;
+      strncpy(input, optarg, MAX_FILE_PATH);
+      break;
 
-      case 'o':
-        output_flag = 1;
-        strncpy(output, optarg, MAX_FILE_PATH);
-        break;
+    case 'o':
+      output_flag = 1;
+      strncpy(output, optarg, MAX_FILE_PATH);
+      break;
 
-      case 'p':
-        passphrase_flag = 1;
-        strncpy(pass, optarg, MAX_PASS);
-        break;
+    case 'p':
+      passphrase_flag = 1;
+      strncpy(pass, optarg, MAX_PASS);
+      break;
 
-      case 'k':
-        iv_flag = 1;
-        strncpy(iv, optarg, IV_SIZE);
-        break;
+    case 'k':
+      iv_flag = 1;
+      strncpy(iv, optarg, IV_SIZE);
+      break;
 
-      case '?':
-        break;
+    case '?':
+      break;
 
-      default:
-        abort();
+    default:
+      abort();
     }
   }
 
