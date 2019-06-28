@@ -21,7 +21,7 @@ Print Help
 Run Tests
 
 ```bash
-./kf128 -t
+python3 test/test_functions.py
 ```
 
 Encrypt / Decrypt File
