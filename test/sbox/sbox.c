@@ -18,15 +18,9 @@ int main(void) {
 
   kf_init_sbox(sbox, 0xDEADBEEF);
 
-  int test[SBOX_SIZE];
-
-  memset(test, 0, sizeof(int) * SBOX_SIZE);
+  int test[SBOX_SIZE] = {0};
 
   for (int i = 0; i < SBOX_SIZE; i++) {
-    if (sbox[i] > SBOX_SIZE - 1 || sbox[i] < 0) {
-      fail = 1;
-      break;
-    }
     test[sbox[i]] = 1;
   }
 

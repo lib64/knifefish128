@@ -18,15 +18,9 @@ int main(void) {
 
   kf_init_pbox(pbox, 0xDEADBEEF);
 
-  int test[PBOX_SIZE];
-
-  memset(test, 0, sizeof(int) * PBOX_SIZE);
+  int test[PBOX_SIZE] = {0};
 
   for (int i = 0; i < PBOX_SIZE; i++) {
-    if (pbox[i] > PBOX_SIZE - 1 || pbox[i] < 0) {
-      fail = 1;
-      break;
-    }
     test[pbox[i]] = 1;
   }
 
