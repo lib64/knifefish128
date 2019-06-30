@@ -3,6 +3,9 @@ CC = gcc
 CFLAGS += -std=c99
 CFLAGS += -O3
 CFLAGS += -Wall
+CFLAGS += -Wextra
+CFLAGS += -Werror
+CFlags += -pedantic
 
 .PHONY: default all clean
 
