@@ -189,8 +189,8 @@ void kf_encrypt_file_cbc(const char *infile, const char *outfile,
   kf_ctx ctx;
   kf_expand_passphrase(passphrase, &ctx);
 
-  FILE *in = fopen(infile, "r");
-  FILE *out = fopen(outfile, "w");
+  FILE *in = fopen(infile, "rb");
+  FILE *out = fopen(outfile, "wb");
 
   fwrite(iv, sizeof(char), BLOCK_SIZE, out);
 
@@ -249,8 +249,8 @@ void kf_decrypt_file_cbc(const char *infile, const char *outfile,
   kf_expand_passphrase(passphrase, &ctx);
   kf_invert_ctx(&ctx, &inv);
 
-  FILE *in = fopen(infile, "r");
-  FILE *out = fopen(outfile, "w");
+  FILE *in = fopen(infile, "rb");
+  FILE *out = fopen(outfile, "wb");
 
   fseek(in, 0L, SEEK_END);
   long input_size = ftell(in);
