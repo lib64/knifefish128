@@ -2,50 +2,6 @@
 
 Knifefish is a 16 round, balanced, Feistel network cipher, with a 128-bit block size.
 
-## Build and Run
-
-This repository contains a command-line proof of concept program meant for testing and benchmarking.
-
-```bash
-git clone https://github.com/lib64/knifefish128
-cd knifefish128/
-make
-```
-
-Print Help
-
-```bash
-./kf128 -h
-```
-
-Run Tests
-
-```bash
-python3 test/test_functions.py
-```
-
-Encrypt / Decrypt File
-
-```bash
-./kf128 -e -i input.txt -o input_encrypted.txt
-./kf128 -d -i input_encrypted.txt -o input_decrypted.txt
-```
-
-The program will prompt for a password unless it is specified with -p.
-
-```bash
-./kf128 -e -i input.txt -o input_encrypted.txt -p "marbles"
-```
-
-The program will generate a 16 byte iv from /dev/urandom unless one is specified with -k.
-
-Any iv specified with -k must be exactly 16 bytes.
-
-```bash
-./kf128 -e -i input.txt -o input_encrypted.txt -p "marbles" -k "absgdferweadseqw"
-```
-
-
 ## Knifefish Algorithm Details
 
 - ##### Linear-Feedback Shift Registers
@@ -193,3 +149,47 @@ The block function works for both encryption and decryption. The only difference
 be inverted for decryption.
 
 ![The Block Function](images/block.png)
+
+## Build and Run
+
+This repository contains a command-line proof of concept program meant for testing and benchmarking.
+
+```bash
+git clone https://github.com/lib64/knifefish128
+cd knifefish128/
+make
+```
+
+Print Help
+
+```bash
+./kf128 -h
+```
+
+Run Tests
+
+```bash
+python3 test/test_functions.py
+```
+
+Encrypt / Decrypt File
+
+```bash
+./kf128 -e -i input.txt -o input_encrypted.txt
+./kf128 -d -i input_encrypted.txt -o input_decrypted.txt
+```
+
+The program will prompt for a password unless it is specified with -p.
+
+```bash
+./kf128 -e -i input.txt -o input_encrypted.txt -p "marbles"
+```
+
+The program will generate a 16 byte iv from /dev/urandom unless one is specified with -k.
+
+Any iv specified with -k must be exactly 16 bytes.
+
+```bash
+./kf128 -e -i input.txt -o input_encrypted.txt -p "marbles" -k "absgdferweadseqw"
+```
+
