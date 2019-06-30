@@ -152,7 +152,7 @@ be inverted for decryption.
 
 ## Build and Run
 
-This repository contains a command-line proof of concept program meant for testing and benchmarking.
+This repository contains a command-line proof of concept program for testing and benchmarking.
 
 ```bash
 git clone https://github.com/lib64/knifefish128
