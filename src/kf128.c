@@ -7,6 +7,13 @@
 #include <stdio.h>
 #include <string.h>
 
+/**
+ * @brief linear feedback shift register
+ *
+ * the lfsr is used for generating pseudo random numbers.
+ *
+ * @param shift_register the 32-bit shift register
+ */
 void kf_lfsr(uint32_t *shift_register) {
 
   *shift_register = (((((*shift_register >> 31) ^ (*shift_register >> 6) ^
@@ -17,6 +24,12 @@ void kf_lfsr(uint32_t *shift_register) {
                     (*shift_register >> 1);
 }
 
+/**
+ * @brief use the lfsr to generate a byte
+ *
+ * @param shift_register the 32-bit shift register
+ * @return uint8_t the pseudo random byte
+ */
 uint8_t kf_lfsr_byte(uint32_t *shift_register) {
 
   for (int i = 0; i < 8; i++)
@@ -25,6 +38,19 @@ uint8_t kf_lfsr_byte(uint32_t *shift_register) {
   return *shift_register & 0x000000FF;
 }
 
+/**
+ * @brief perform a 32-bit pseudo-Hadamard transform
+ *
+ * perform a 32-bit pseudo-Hadamard transform.
+ *
+ * a_prime = a + b % 2^32
+ * b_prime = a + 2b % 2^32
+ *
+ * @param a 32-bit input value
+ * @param b 32-bit input value
+ * @param a_prime 32-bit output value
+ * @param b_prime 32-bit output value
+ */
 void kf_pht(const uint32_t *a, const uint32_t *b, uint32_t *a_prime,
             uint32_t *b_prime) {
 
@@ -34,6 +60,15 @@ void kf_pht(const uint32_t *a, const uint32_t *b, uint32_t *a_prime,
   *b_prime = bp;
 }
 
+/**
+ * @brief invert the ctx object
+ *
+ * invert the ctx object by inverting the order of the round keys,  and the
+ * white keys.
+ *
+ * @param key a pointer to the input ctx
+ * @param inv a pointer to the inverted ctx
+ */
 void kf_invert_ctx(const kf_ctx *key, kf_ctx *inv) {
 
   memcpy(inv, key, sizeof(kf_ctx));
@@ -49,6 +84,14 @@ void kf_invert_ctx(const kf_ctx *key, kf_ctx *inv) {
   }
 }
 
+/**
+ * @brief initialize an sbox
+ *
+ * initialize an sbox with pseudorandom data derived from key material.
+ *
+ * @param s the sbox array
+ * @param seed the pseudorandom seed
+ */
 void kf_init_sbox(uint8_t s[SBOX_SIZE], const uint32_t seed) {
 
   uint8_t indexes[SBOX_SIZE];
@@ -66,6 +109,14 @@ void kf_init_sbox(uint8_t s[SBOX_SIZE], const uint32_t seed) {
   }
 }
 
+/**
+ * @brief initialize a pbox
+ *
+ * initialize a pbox with pseudorandom data derived from key material.
+ *
+ * @param p the pbox array
+ * @param seed the pseudorandom seed
+ */
 void kf_init_pbox(uint8_t p[PBOX_SIZE], const uint32_t seed) {
 
   uint8_t indexes[PBOX_SIZE];
@@ -83,6 +134,15 @@ void kf_init_pbox(uint8_t p[PBOX_SIZE], const uint32_t seed) {
   }
 }
 
+/**
+ * @brief use the passphrase to initalize the ctx object
+ *
+ * use a variable-length passphrase to populate the ctx object with key
+ * material.
+ *
+ * @param passphrase the plain-text passphrase
+ * @param ctx a pointer to the ctx object
+ */
 void kf_expand_passphrase(const char *passphrase, kf_ctx *ctx) {
 
   uint32_t key[KEY_SIZE] = {0};
@@ -141,6 +201,19 @@ void kf_expand_passphrase(const char *passphrase, kf_ctx *ctx) {
   }
 }
 
+/**
+ * @brief the f function
+ *
+ * the f function takes 64-bits of input and performs a P-box permutation, an
+ * S-box substitution, and a pseudo-hadamard transform on it. finally, the
+ * output from the PHT is xored with the round subkey that corresponds to the
+ * current round.
+ *
+ * @param in the input block
+ * @param out the output block
+ * @param round the round index
+ * @param ctx the ctx object
+ */
 void kf_f(const uint32_t *in, uint32_t *out, const size_t round, kf_ctx *ctx) {
 
   const uint8_t *in8 = (const uint8_t *)in;
@@ -157,6 +230,19 @@ void kf_f(const uint32_t *in, uint32_t *out, const size_t round, kf_ctx *ctx) {
   *(out + 1) ^= ctx->skey[round][1];
 }
 
+/**
+ * @brief the round function
+ *
+ * the round function performs a single round of encryption. a 128-bit input
+ * block is split into 2 halves, L0 and R0. R0 is used as input to the F
+ * function, along with the current round subkey. the output from the F function
+ * is xored with L0 to produce R1. The unchanged R0 becomes L1.
+ *
+ * @param in the input block
+ * @param out the output block
+ * @param round the current round index
+ * @param ctx a pointer to the ctx object
+ */
 void kf_round(const uint32_t *in, uint32_t *out, const size_t round,
               kf_ctx *ctx) {
 
@@ -176,6 +262,17 @@ void kf_round(const uint32_t *in, uint32_t *out, const size_t round,
   }
 }
 
+/**
+ * @brief the block function
+ *
+ * the block function takes 128-bits of input and performs a key whitening step,
+ * 16 iterations of the round function, and a final key whitening step, before
+ * returning the result as output.
+ *
+ * @param in the input block
+ * @param out the output block
+ * @param ctx a pointer to the ctx object
+ */
 void kf_block(const uint32_t *in, uint32_t *out, kf_ctx *ctx) {
 
   memcpy(out, in, sizeof(uint32_t) * 4);
@@ -195,6 +292,15 @@ void kf_block(const uint32_t *in, uint32_t *out, kf_ctx *ctx) {
   out[3] ^= ctx->wkey[1][3];
 }
 
+/**
+ * @brief encrypt a file with knifefish in cipher-block-chaining mode.
+ *
+ * @param infile the name of the input file
+ * @param outfile the name of the output file
+ * @param passphrase the plaintext passphrase
+ * @param iv the initialization vector
+ * @param padding random padding
+ */
 void kf_encrypt_file_cbc(const char *infile, const char *outfile,
                          const char *passphrase, const char *iv,
                          const char *padding) {
@@ -257,6 +363,15 @@ void kf_encrypt_file_cbc(const char *infile, const char *outfile,
   fclose(out);
 }
 
+/**
+ * @brief decrypt a file with knifefish in cipher-block-chaining mode.
+ *
+ * @param infile the name of the input file
+ * @param outfile the name of the output file
+ * @param passphrase the plaintext passphrase
+ * @param iv the initialization vector
+ * @param padding random padding
+ */
 void kf_decrypt_file_cbc(const char *infile, const char *outfile,
                          const char *passphrase) {
 

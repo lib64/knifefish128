@@ -20,6 +20,10 @@
 #define BLOCK_SIZE 16
 #define PHT_MAX 4294967296
 
+/**
+ * @brief the ctx object holds sboxes, pboxes, and key material.
+ *
+ */
 typedef struct {
   uint8_t sbox[SBOX_COUNT][SBOX_SIZE];
   uint8_t pbox[PBOX_SIZE];
